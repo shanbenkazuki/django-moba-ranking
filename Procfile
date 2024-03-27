@@ -1,0 +1,1 @@
+web: gunicorn moba_ranking.wsgi
