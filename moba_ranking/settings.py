@@ -94,7 +94,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "OPTIONS": {
-            "service": "my_service",
+            "service": "moba_ranking",
             "passfile": ".my_pgpass",
         },
     }
