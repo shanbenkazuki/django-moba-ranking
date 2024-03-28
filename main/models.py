@@ -19,3 +19,15 @@ class Hero(models.Model):
 
     def __str__(self):
         return self.name_en
+
+class HeroMetaData(models.Model):
+    name = models.TextField()
+    win_rate = models.FloatField()
+    pick_rate = models.FloatField()
+    ban_rate = models.FloatField()
+    reference_date = models.DateField()
+    rank_level = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = (('name', 'rank_level', 'reference_date'),)
