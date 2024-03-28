@@ -1,6 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from .models import Hero
 
 # Create your views here.
-def ranking(request):
-    return HttpResponse("Hello, world. You're at the main ranking.")
+def hero_list(request):
+    heroes = Hero.objects.all().values_list('name_jp', flat=True)
+    context = {
+        'heroes': heroes
+    }
+    return render(request, 'main/hero_list.html', context)
