@@ -4,11 +4,9 @@
     <title>Hero List</title>
 </head>
 <body>
-    <h1>Hero List</h1>
-    <ul>
-        {% for hero in heroes %}
-            <li>{{ hero }}</li>
-        {% endfor %}
-    </ul>
+    <h1>Heros</h1>
+    {% for hero in heroes %}
+        <img src="{{ hero.1 }}" alt="{{ hero.0 }}" width="100">
+    {% endfor %}
 </body>
 </html>
