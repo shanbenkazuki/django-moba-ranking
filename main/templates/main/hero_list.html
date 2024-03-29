@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Hero List</title>
-</head>
-<body>
-    <h1>Heros</h1>
-    {% for hero in heroes %}
-        <img src="{{ hero.1 }}" alt="{{ hero.0 }}" width="100">
-    {% endfor %}
-</body>
+    <head>
+        <title>Hero List</title>
+    </head>
+    <body>
+        <h1>Heros</h1>
+        {% for hero in heroes %}
+            <img src="{{ hero.1 }}" alt="{{ hero.0 }}" width="100">
+        {% endfor %}
+    </body>
 </html>
