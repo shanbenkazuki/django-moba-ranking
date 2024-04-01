@@ -11,6 +11,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
 from .models import HeroMetaData
 
+def wait_for_page_load(driver):
+    while True:
+        ready_state = driver.execute_script("return document.readyState")
+        if ready_state == "complete":
+            return
+        time.sleep(1)
+
 
 def scrape_mlbb_meta_data():
     DISPLAY_URL = "https://m.mobilelegends.com/en/rank"
@@ -35,15 +42,26 @@ def scrape_mlbb_meta_data():
 
     time.sleep(3)
 
+    # ページの読み込みが完了するまで待機
+    wait_for_page_load(driver)
+
     # プライバシーポリシーを閉じる
-    WebDriverWait(driver, WAIT_TIME).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='mt-cb-policy']/div/div[2]"))).click()
+    privacy_policy_close_button = WebDriverWait(driver, WAIT_TIME).until(
+        EC.element_to_be_clickable((By.XPATH, "//*[@id='mt-cb-policy']/div/div[2]"))
+    )
+    privacy_policy_close_button.click()
 
     # Mythic+のタブに切り替える
-    WebDriverWait(driver, WAIT_TIME).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='rank']/div[1]/div[2]/ul/li[2]"))).click()
+    mythic_plus_tab = WebDriverWait(driver, WAIT_TIME).until(
+        EC.element_to_be_clickable((By.XPATH, "//*[@id='rank']/div[1]/div[2]/ul/li[2]"))
+    )
+    mythic_plus_tab.click()
+
     rank_level = 'Mythic+'
 
-    WebDriverWait(driver, WAIT_TIME).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, ".slotwrapper > ul > li > a"))
+    # 要素が表示されるまで待機
+    hero_elements = WebDriverWait(driver, WAIT_TIME).until(
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".slotwrapper > ul > li > a"))
     )
 
     time.sleep(2)
