@@ -49,11 +49,11 @@ def scrape_mlbb_meta_data():
 
     print('------------------------------------------------------------')
 
-    # プライバシーポリシーの要素を非表示にする
-    privacy_policy_element = WebDriverWait(driver, WAIT_TIME).until(
-        EC.presence_of_element_located((By.ID, "mt-cb-policy"))
+    # プライバシーポリシーを閉じる
+    privacy_policy_close_button = WebDriverWait(driver, WAIT_TIME).until(
+        EC.presence_of_element_located((By.XPATH, "//*[@class='mt-cb-policy-close']"))
     )
-    driver.execute_script("arguments[0].style.visibility = 'hidden';", privacy_policy_element)
+    driver.execute_script("arguments[0].click();", privacy_policy_close_button)
     # ページの読み込みが完了するまで待機
     wait_for_page_load(driver)
 
