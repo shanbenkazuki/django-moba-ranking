@@ -56,6 +56,7 @@ def scrape_mlbb_meta_data():
     wait_for_page_load(driver)
 
     print(driver.page_source)
+    print('------------------------------------------------------------')
 
     # Mythic+のタブに切り替える
     mythic_plus_tab = WebDriverWait(driver, WAIT_TIME).until(
