@@ -14,7 +14,7 @@ from .models import HeroMetaData
 
 def scrape_mlbb_meta_data():
     DISPLAY_URL = "https://m.mobilelegends.com/en/rank"
-    WAIT_TIME = 10
+    WAIT_TIME = 50
 
     # ローカル環境で実行する場合
     # chrome_options = Options()
@@ -27,7 +27,8 @@ def scrape_mlbb_meta_data():
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
 
-    service = Service()  # デフォルトのChromeDriverパスを使用
+    service = Service()  # Heroku環境で実行する場合
+    # service = Service(ChromeDriverManager().install())  # ローカル環境で実行する場合
     driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.implicitly_wait(WAIT_TIME)
     driver.get(DISPLAY_URL)
