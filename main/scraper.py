@@ -34,8 +34,8 @@ def scrape_mlbb_meta_data():
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
 
-    service = Service()  # Heroku環境で実行する場合
-    # service = Service(ChromeDriverManager().install())  # ローカル環境で実行する場合
+    # service = Service()  # Heroku環境で実行する場合
+    service = Service(ChromeDriverManager().install())  # ローカル環境で実行する場合
     driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.implicitly_wait(WAIT_TIME)
     driver.get(DISPLAY_URL)
@@ -49,11 +49,11 @@ def scrape_mlbb_meta_data():
 
     print('------------------------------------------------------------')
 
-    # プライバシーポリシーを閉じる
-    privacy_policy_close_button = WebDriverWait(driver, WAIT_TIME).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, ".mt-cb-policy-close"))
+    # プライバシーポリシーの要素を削除する
+    privacy_policy_element = WebDriverWait(driver, WAIT_TIME).until(
+        EC.presence_of_element_located((By.ID, "mt-cb-policy"))
     )
-    driver.execute_script("arguments[0].click();", privacy_policy_close_button)
+    driver.execute_script("arguments[0].remove();", privacy_policy_element)
     # ページの読み込みが完了するまで待機
     wait_for_page_load(driver)
 
