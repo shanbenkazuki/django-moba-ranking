@@ -40,7 +40,7 @@ def scrape_mlbb_meta_data():
     driver.implicitly_wait(WAIT_TIME)
     driver.get(DISPLAY_URL)
 
-    time.sleep(3)
+    time.sleep(10)
 
     # ページの読み込みが完了するまで待機
     wait_for_page_load(driver)
@@ -56,6 +56,8 @@ def scrape_mlbb_meta_data():
     driver.execute_script("arguments[0].click();", privacy_policy_close_button)
     # ページの読み込みが完了するまで待機
     wait_for_page_load(driver)
+
+    time.sleep(10)
 
     print(driver.page_source)
     print('------------------------------------------------------------')
