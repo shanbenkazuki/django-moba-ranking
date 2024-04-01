@@ -51,6 +51,10 @@ def scrape_mlbb_meta_data():
     )
     privacy_policy_close_button.click()
 
+    rateList = BeautifulSoup(driver.page_source, 'html.parser').select(".slotwrapper > ul > li > a")
+
+    print(rateList)
+
     # Mythic+のタブに切り替える
     mythic_plus_tab = WebDriverWait(driver, WAIT_TIME).until(
         EC.element_to_be_clickable((By.XPATH, "//*[@id='rank']/div[1]/div[2]/ul/li[2]"))
