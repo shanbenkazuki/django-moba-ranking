@@ -4,9 +4,36 @@
         <title>Hero List</title>
     </head>
     <body>
-        <h1>Heros</h1>
-        {% for hero in heroes %}
-            <img src="{{ hero.1 }}" alt="{{ hero.0 }}" width="100">
+        <h1>ヒーローTier</h1>
+        <p>Latest Update: {{ latest_date }}</p>
+        <h2>S+ Heroes</h2>
+        {% for hero in s_plus_heroes %}
+        <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="100">
+        {% endfor %}
+        
+        <h2>S Heroes</h2>
+        {% for hero in s_heroes %}
+        <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="100">
+        {% endfor %}
+        
+        <h2>A+ Heroes</h2>
+        {% for hero in a_plus_heroes %}
+        <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="100">
+        {% endfor %}
+        
+        <h2>A Heroes</h2>
+        {% for hero in a_heroes %}
+        <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="100">
+        {% endfor %}
+        
+        <h2>B Heroes</h2>
+        {% for hero in b_heroes %}
+        <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="100">
+        {% endfor %}
+        
+        <h2>C Heroes</h2>
+        {% for hero in c_heroes %}
+        <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="100">
         {% endfor %}
     </body>
 </html>
