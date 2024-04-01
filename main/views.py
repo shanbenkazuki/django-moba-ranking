@@ -2,93 +2,71 @@ from django.shortcuts import render
 from .models import Hero
 from django.db.models import Max
 from .models import HeroMetaData
-
 import pandas as pd
 
+# 定数の定義
+RANK_THRESHOLDS = [1.0, 0.5, 0, -0.5, -1.0]  # ランクの閾値
+RANK_LABELS = ['S+', 'S', 'A+', 'A', 'B', 'C']  # ランクのラベル
+
 def get_rank_from_z_score(score):
-  if score >= 1.0:
-    return 'S+'
-  elif score >= 0.5:
-    return 'S'
-  elif score >= 0:
-    return 'A+'
-  elif score >= -0.5:
-    return 'A'
-  elif score >= -1.0:
-    return 'B'
-  else:
+    """
+    z-scoreからランクを取得する関数
+    """
+    for threshold, label in zip(RANK_THRESHOLDS, RANK_LABELS):
+        if score >= threshold:
+            return label
     return 'C'
 
-# Create your views here.
 def hero_ranking(request):
+    # Heroモデルから必要なデータを取得
     heroes = Hero.objects.all().values_list('name_jp', 'name_en', 'image_url')
-    context = {
-        'heroes': heroes
-    }
-
-    # reference_dateの最大値（最新の日付）を取得
-    latest_date = HeroMetaData.objects.aggregate(Max('reference_date'))['reference_date__max']
-
-    # 最新の日付に対応するHeroMetaDataを取得
-    latest_hero_metadata = HeroMetaData.objects.filter(reference_date=latest_date).values('name', 'win_rate', 'pick_rate', 'ban_rate', 'reference_date')
-
-    # クエリセットをデータフレームに変換
-    df = pd.DataFrame(list(latest_hero_metadata))
-
+    
+    # HeroMetaDataモデルから最新の日付のデータを取得
+    latest_hero_metadata = HeroMetaData.objects.filter(
+        reference_date=HeroMetaData.objects.latest('reference_date').reference_date
+    ).values('name', 'win_rate', 'pick_rate', 'ban_rate', 'reference_date')
+    
+    # クエリセットをDataFrameに変換
+    hero_metadata_df = pd.DataFrame(list(latest_hero_metadata))
+    
     # 列のデータ型を変更
-    df = df.astype({'win_rate': 'float', 'pick_rate': 'float', 'ban_rate': 'float'})
-
-    # win_rate_zの計算
-    df['win_rate_z'] = (df['win_rate'] - df['win_rate'].mean()) / df['win_rate'].std()
-
-    # pick_rate_zの計算
-    df['pick_rate_z'] = (df['pick_rate'] - df['pick_rate'].mean()) / df['pick_rate'].std()
-
-    # ban_rate_zの計算
-    df['ban_rate_z'] = (df['ban_rate'] - df['ban_rate'].mean()) / df['ban_rate'].std()
-
+    hero_metadata_df = hero_metadata_df.astype({'win_rate': 'float', 'pick_rate': 'float', 'ban_rate': 'float'})
+    
+    # 各指標のz-scoreを計算
+    hero_metadata_df['win_rate_z'] = (hero_metadata_df['win_rate'] - hero_metadata_df['win_rate'].mean()) / hero_metadata_df['win_rate'].std()
+    hero_metadata_df['pick_rate_z'] = (hero_metadata_df['pick_rate'] - hero_metadata_df['pick_rate'].mean()) / hero_metadata_df['pick_rate'].std()
+    hero_metadata_df['ban_rate_z'] = (hero_metadata_df['ban_rate'] - hero_metadata_df['ban_rate'].mean()) / hero_metadata_df['ban_rate'].std()
+    
     # interactionの計算
-    df['interaction'] = df['win_rate_z'] * df['pick_rate_z']
-
+    hero_metadata_df['interaction'] = hero_metadata_df['win_rate_z'] * hero_metadata_df['pick_rate_z']
+    
     # tier_score_zの計算
-    df['tier_score_z'] = 0.6 * df['win_rate_z'] + 0.25 * df['pick_rate_z'] + 0.15 * df['ban_rate_z'] - 0.2 * df['interaction']
+    hero_metadata_df['tier_score_z'] = 0.6 * hero_metadata_df['win_rate_z'] + 0.25 * hero_metadata_df['pick_rate_z'] + 0.15 * hero_metadata_df['ban_rate_z'] - 0.2 * hero_metadata_df['interaction']
+    
+    # DataFrameのインデックスをname_enに変更
+    hero_metadata_df = hero_metadata_df.reset_index().set_index('name')
     
     hero_dict = {}
-
-    # DataFrameのインデックスをname_enに変更
-    df = df.reset_index().set_index('name')
-
     for name_ja, name_en, image_url in heroes:
-        hero_dict[name_en] = {
-            'name_ja': name_ja,
-            'image_url': image_url,
-            'rank': get_rank_from_z_score(df.loc[name_en, 'tier_score_z']) if name_en in df.index else None,
-        }
-
+        if name_en in hero_metadata_df.index:
+            hero_dict[name_en] = {
+                'name_ja': name_ja,
+                'image_url': image_url,
+                'rank': get_rank_from_z_score(hero_metadata_df.loc[name_en, 'tier_score_z']),
+            }
+    
     # ランクごとのヒーローを格納する辞書を初期化
-    rank_heroes = {
-        'S+': [],
-        'S': [],
-        'A+': [],
-        'A': [],
-        'B': [],
-        'C': [],
-    }
-
+    rank_heroes = {rank: [] for rank in RANK_LABELS}
+    
     # ランクごとにヒーローを分類
     for hero, data in hero_dict.items():
-        rank = data['rank']
-        rank_heroes[rank].append((data['name_ja'], hero, data['image_url']))
-
+        rank_heroes[data['rank']].append((data['name_ja'], hero, data['image_url']))
+    
     # contextにランクごとのヒーローを追加
-    context = {
-        's_plus_heroes': rank_heroes['S+'],
-        's_heroes': rank_heroes['S'],
-        'a_plus_heroes': rank_heroes['A+'],
-        'a_heroes': rank_heroes['A'],
-        'b_heroes': rank_heroes['B'],
-        'c_heroes': rank_heroes['C'],
-        'latest_date': latest_date.strftime('%Y-%m-%d'),
-    }
-
+    context = {f"{rank.lower().replace('+', '_plus')}_heroes": heroes for rank, heroes in rank_heroes.items()}
+    
+    # contextに最新の日付を追加
+    context['latest_date'] = latest_hero_metadata[0]['reference_date'].strftime('%Y-%m-%d')
+    
+    # hero_ranking.htmlテンプレートにcontextを渡してレンダリング
     return render(request, 'main/hero_ranking.html', context)
