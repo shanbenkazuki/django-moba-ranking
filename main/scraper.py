@@ -45,6 +45,8 @@ def scrape_mlbb_meta_data():
     # ページの読み込みが完了するまで待機
     wait_for_page_load(driver)
 
+    print(driver.page_source)
+
     # プライバシーポリシーを閉じる
     privacy_policy_close_button = WebDriverWait(driver, WAIT_TIME).until(
         EC.element_to_be_clickable((By.XPATH, "//*[@id='mt-cb-policy']/div/div[2]"))
