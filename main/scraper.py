@@ -128,8 +128,8 @@ def create_mlbb_meta_data():
     # Heroku環境で実行する場合
     chrome_options = webdriver.ChromeOptions()
     # chrome_options.add_argument("--headless")
-    # chrome_options.add_argument("--disable-dev-shm-usage")
-    # chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
 
     # service = Service()  # Heroku環境で実行する場合
     service = Service(ChromeDriverManager().install())  # ローカル環境で実行する場合
