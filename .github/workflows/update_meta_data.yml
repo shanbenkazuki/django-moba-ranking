@@ -3,6 +3,7 @@ name: Update Meta Data  # ワークフローの名前
 on:
   schedule:
     - cron: '0 9 * * *'  # 毎朝9時に実行
+  workflow_dispatch:
 
 jobs:
   update_meta_data:  # ジョブの名前
