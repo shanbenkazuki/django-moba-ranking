@@ -148,12 +148,8 @@ def create_mlbb_meta_data():
     )
     privacy_policy_close_button.click()
 
-    # time.sleep(5)
-
     # ページの読み込みが完了するまで待機
     wait_for_page_load(driver)
-
-    print(driver.page_source)
 
     # Mythic+のタブに切り替える
     mythic_plus_tab = WebDriverWait(driver, WAIT_TIME).until(
