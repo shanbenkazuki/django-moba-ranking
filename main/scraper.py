@@ -13,6 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
 from .models import HeroMetaData
 from django.core.exceptions import ObjectDoesNotExist
+from selenium.common.exceptions import NoSuchElementException
 
 def wait_for_page_load(driver):
     while True:
@@ -127,7 +128,7 @@ def create_mlbb_meta_data():
 
     # Heroku環境で実行する場合
     chrome_options = webdriver.ChromeOptions()
-    # chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
 
@@ -142,12 +143,21 @@ def create_mlbb_meta_data():
 
     # プライバシーポリシーを閉じる
     privacy_policy_close_button = WebDriverWait(driver, WAIT_TIME).until(
-        EC.visibility_of_element_located((By.XPATH, "//*[@class='mt-cb-policy-close']"))
+        EC.visibility_of_element_located((By.XPATH, "/html/body/div[4]/div/div[3]/div/div[2]"))
     )
     driver.execute_script("arguments[0].click();", privacy_policy_close_button)
 
+    time.sleep(5)
+
+    try:
+        # プライバシーポリシーが表示されているかチェック
+        privacy_policy = driver.find_element(By.XPATH, "//\*\[@class='mt-cb-policy-close'\]")
+        print("プライバシーポリシーが閉じられていません")
+    except NoSuchElementException:
+        print("プライバシーポリシーは正常に閉じられました")
+
     # ページの読み込みが完了するまで待機
-    wait_for_page_load(driver)
+    # wait_for_page_load(driver)
 
     # Mythic+のタブに切り替える
     mythic_plus_tab = WebDriverWait(driver, WAIT_TIME).until(
