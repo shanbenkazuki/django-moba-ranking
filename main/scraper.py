@@ -143,9 +143,10 @@ def create_mlbb_meta_data():
 
     # プライバシーポリシーを閉じる
     privacy_policy_close_button = WebDriverWait(driver, WAIT_TIME).until(
-        EC.visibility_of_element_located((By.XPATH, "/html/body/div[4]/div/div[3]/div/div[2]"))
+        EC.visibility_of_element_located((By.XPATH, "//*[@id='mt-cb-policy']/div/div[2]"))
     )
-    driver.execute_script("arguments[0].click();", privacy_policy_close_button)
+    # driver.execute_script("arguments[0].click();", privacy_policy_close_button)
+    privacy_policy_close_button.click()
 
     time.sleep(5)
 
