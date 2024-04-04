@@ -1,110 +1,84 @@
-{% load django_bootstrap5 %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block title %}モバイル・レジェンドTier{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hero List</title>
-    {% bootstrap_css %}
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-        }
-        h1 {
-            font-weight: 500;
-        }
-        .lead {
-            font-weight: 300;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container mt-3">
-        <div class="row">
-            <div class="col">
-                <h1 class="text-center mb-4">ヒーローTier</h1>
-            </div>
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h1 class="text-center mb-4">ヒーローTier</h1>
         </div>
-        <div class="row">
-            <div class="col">
-                <p class="lead text-center">更新日: <span class="badge bg-primary">{{ latest_date }}</span></p>
-            </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p class="lead text-center">更新日: <span class="badge bg-primary">{{ latest_date }}</span></p>
         </div>
-
-        <table class="table">
-            <tr>
-                <td style="background-color: #ff9900;">
-                    <h2 class="text-white">S+</h2>
-                </td>
-                <td style="background-color: #ffeecc;">
-                    {% for hero in s_plus_heroes %}
-                    <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
-                    {% endfor %}
-                </td>
-            </tr>
-
-            <tr>
-                <td style="background-color: #ff6666;">
-                    <h2 class="text-white">S</h2>
-                </td>
-                <td style="background-color: #ffeeee;">
-                    {% for hero in s_heroes %}
-                    <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
-                    {% endfor %}
-                </td>
-            </tr>
-
-            <tr>
-                <td style="background-color: #ff00cc;">
-                    <h2 class="text-white">A+</h2>
-                </td>
-                <td style="background-color: #ffe7fa;">
-                    {% for hero in a_plus_heroes %}
-                    <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
-                    {% endfor %}
-                </td>
-            </tr>
-
-            <tr>
-                <td style="background-color: #6666ff;">
-                    <h2 class="text-white">A</h2>
-                </td>
-                <td style="background-color: #eeeeff;">
-                    {% for hero in a_heroes %}
-                    <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
-                    {% endfor %}
-                </td>
-            </tr>
-
-            <tr>
-                <td style="background-color: #53abff;">
-                    <h2 class="text-white">B</h2>
-                </td>
-                <td style="background-color: #f0f8ff;">
-                    {% for hero in b_heroes %}
-                    <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
-                    {% endfor %}
-                </td>
-            </tr>
-
-            <tr>
-                <td style="background-color: #0dbc0d;">
-                    <h2 class="text-white">C</h2>
-                </td>
-                <td style="background-color: #eeffee;">
-                    {% for hero in c_heroes %}
-                    <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
-                    {% endfor %}
-                </td>
-            </tr>
-        </table>
     </div>
 
-    {% bootstrap_javascript %}
-</body>
+    <table class="table">
+        <tr>
+            <td style="background-color: #ff9900;">
+                <h2 class="text-white">S+</h2>
+            </td>
+            <td style="background-color: #ffeecc;">
+                {% for hero in s_plus_heroes %}
+                <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
+                {% endfor %}
+            </td>
+        </tr>
 
-</html>
+        <tr>
+            <td style="background-color: #ff6666;">
+                <h2 class="text-white">S</h2>
+            </td>
+            <td style="background-color: #ffeeee;">
+                {% for hero in s_heroes %}
+                <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
+                {% endfor %}
+            </td>
+        </tr>
+
+        <tr>
+            <td style="background-color: #ff00cc;">
+                <h2 class="text-white">A+</h2>
+            </td>
+            <td style="background-color: #ffe7fa;">
+                {% for hero in a_plus_heroes %}
+                <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
+                {% endfor %}
+            </td>
+        </tr>
+
+        <tr>
+            <td style="background-color: #6666ff;">
+                <h2 class="text-white">A</h2>
+            </td>
+            <td style="background-color: #eeeeff;">
+                {% for hero in a_heroes %}
+                <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
+                {% endfor %}
+            </td>
+        </tr>
+
+        <tr>
+            <td style="background-color: #53abff;">
+                <h2 class="text-white">B</h2>
+            </td>
+            <td style="background-color: #f0f8ff;">
+                {% for hero in b_heroes %}
+                <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
+                {% endfor %}
+            </td>
+        </tr>
+
+        <tr>
+            <td style="background-color: #0dbc0d;">
+                <h2 class="text-white">C</h2>
+            </td>
+            <td style="background-color: #eeffee;">
+                {% for hero in c_heroes %}
+                <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+{% endblock %}
