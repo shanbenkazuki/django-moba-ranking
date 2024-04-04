@@ -867,6 +867,13 @@ class Command(BaseCommand):
                             "role": "Fighter",
                             "image_url": "https://shanbenzzz.com/wp-content/uploads/2024/01/Cici.webp",
                             "article_url": "https://shanbenzzz.com/mobile-legends/hero/fighter/cici"
+                        },
+                        {
+                            "name_jp": "チップ",
+                            "name_en": "Chip",
+                            "role": "Fighter",
+                            "image_url": "https://shanbenzzz.com/wp-content/uploads/2024/04/Chip.webp",
+                            "article_url": "https://shanbenzzz.com/mobile-legends/hero/support/chip"
                         }
                         ]
 

@@ -11,8 +11,8 @@ class Hero(models.Model):
         ('Marksman', 'Marksman'),
     ]
 
-    name_jp = models.CharField(max_length=255)
-    name_en = models.CharField(max_length=255)
+    name_jp = models.CharField(max_length=255, unique=True)
+    name_en = models.CharField(max_length=255, unique=True)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
     image_url = models.URLField()
     article_url = models.URLField()
