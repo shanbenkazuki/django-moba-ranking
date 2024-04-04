@@ -15,59 +15,73 @@
         <h1>ヒーローTier</h1>
         <p>Latest Update: {{ latest_date }}</p>
 
-        <div class="row">
-            <div class="col-md-12">
-                <h2>S+ Heroes</h2>
-                {% for hero in s_plus_heroes %}
-                <img src="{{ hero.2 }}" alt="{{ hero.0 }}" class="img-thumbnail" width="100">
-                {% endfor %}
-            </div>
-        </div>
+        <table class="table">
+            <tr>
+                <td style="background-color: #ff9900;">
+                    <h2 class="text-white">S+</h2>
+                </td>
+                <td style="background-color: #ffeecc;">
+                    {% for hero in s_plus_heroes %}
+                    <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
+                    {% endfor %}
+                </td>
+            </tr>
 
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <h2>S Heroes</h2>
-                {% for hero in s_heroes %}
-                <img src="{{ hero.2 }}" alt="{{ hero.0 }}" class="img-thumbnail" width="100">
-                {% endfor %}
-            </div>
-        </div>
+            <tr>
+                <td style="background-color: #ff6666;">
+                    <h2 class="text-white">S</h2>
+                </td>
+                <td style="background-color: #ffeeee;">
+                    {% for hero in s_heroes %}
+                    <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
+                    {% endfor %}
+                </td>
+            </tr>
 
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <h2>A+ Heroes</h2>
-                {% for hero in a_plus_heroes %}
-                <img src="{{ hero.2 }}" alt="{{ hero.0 }}" class="img-thumbnail" width="100">
-                {% endfor %}
-            </div>
-        </div>
+            <tr>
+                <td style="background-color: #ff00cc;">
+                    <h2 class="text-white">A+</h2>
+                </td>
+                <td style="background-color: #ffe7fa;">
+                    {% for hero in a_plus_heroes %}
+                    <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
+                    {% endfor %}
+                </td>
+            </tr>
 
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <h2>A Heroes</h2>
-                {% for hero in a_heroes %}
-                <img src="{{ hero.2 }}" alt="{{ hero.0 }}" class="img-thumbnail" width="100">
-                {% endfor %}
-            </div>
-        </div>
+            <tr>
+                <td style="background-color: #6666ff;">
+                    <h2 class="text-white">A</h2>
+                </td>
+                <td style="background-color: #eeeeff;">
+                    {% for hero in a_heroes %}
+                    <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
+                    {% endfor %}
+                </td>
+            </tr>
 
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <h2>B Heroes</h2>
-                {% for hero in b_heroes %}
-                <img src="{{ hero.2 }}" alt="{{ hero.0 }}" class="img-thumbnail" width="100">
-                {% endfor %}
-            </div>
-        </div>
+            <tr>
+                <td style="background-color: #53abff;">
+                    <h2 class="text-white">B</h2>
+                </td>
+                <td style="background-color: #f0f8ff;">
+                    {% for hero in b_heroes %}
+                    <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
+                    {% endfor %}
+                </td>
+            </tr>
 
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <h2>C Heroes</h2>
-                {% for hero in c_heroes %}
-                <img src="{{ hero.2 }}" alt="{{ hero.0 }}" class="img-thumbnail" width="100">
-                {% endfor %}
-            </div>
-        </div>
+            <tr>
+                <td style="background-color: #0dbc0d;">
+                    <h2 class="text-white">C</h2>
+                </td>
+                <td style="background-color: #eeffee;">
+                    {% for hero in c_heroes %}
+                    <img src="{{ hero.2 }}" alt="{{ hero.0 }}" width="80">
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
     </div>
 
     {% bootstrap_javascript %}
