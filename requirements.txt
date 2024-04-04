@@ -9,3 +9,4 @@ pandas==2.2.1
 selenium==4.19.0
 webdriver_manager==4.0.1
 beautifulsoup4==4.12.3
+django-bootstrap5==23.4
