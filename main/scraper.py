@@ -141,15 +141,15 @@ def create_mlbb_meta_data():
     # ページの読み込みが完了するまで待機
     wait_for_page_load(driver)
 
-    # プライバシーポリシーを閉じる
-    privacy_policy_close_button = WebDriverWait(driver, WAIT_TIME).until(
-        # EC.element_to_be_clickable((By.XPATH, "//*[@id='mt-cb-policy']/div/div[2]"))
-        EC.element_to_be_clickable((By.CSS_SELECTOR, ".mt-cb-policy-close"))
-    )
-    privacy_policy_close_button.click()
+    # # プライバシーポリシーを閉じる
+    # privacy_policy_close_button = WebDriverWait(driver, WAIT_TIME).until(
+    #     # EC.element_to_be_clickable((By.XPATH, "//*[@id='mt-cb-policy']/div/div[2]"))
+    #     EC.element_to_be_clickable((By.CSS_SELECTOR, ".mt-cb-policy-close"))
+    # )
+    # privacy_policy_close_button.click()
 
-    # ページの読み込みが完了するまで待機
-    wait_for_page_load(driver)
+    # # ページの読み込みが完了するまで待機
+    # wait_for_page_load(driver)
 
     # Mythic+のタブに切り替える
     mythic_plus_tab = WebDriverWait(driver, WAIT_TIME).until(
